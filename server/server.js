@@ -11,7 +11,7 @@ const PORT=5000;
 app.use(bodyParser.json());
 app.use(cors());
 
-const YOUTUBE_API_KEY = 'AIzaSyASCPnY42U8ZFm6jFsW9hxQ8RtH8_ggY-o';
+const YOUTUBE_API_KEY = '';
 
 // Proxy configuration (adjust port as needed)
 app.use('/youtube', createProxyMiddleware({
