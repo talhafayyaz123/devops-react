@@ -10,4 +10,5 @@ const Button = ({buttonTitle,className,style,onClickFunc}) => {
   )
 }
 
+
 export default Button
