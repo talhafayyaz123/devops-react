@@ -12,10 +12,10 @@ variables:
   azureSubscription: '6d15ccab-83de-418a-91ff-fec2af415ebd'
 
   # Web app name
-  webAppName: 'react-app-cicd'
+  webAppName: 'react-web-app'
 
   # Environment name
-  environmentName: 'react-app-cicd'
+  environmentName: 'react-web-app'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
