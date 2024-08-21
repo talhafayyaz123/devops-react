@@ -8,10 +8,10 @@ variables:
   azureSubscription: '6d15ccab-83de-418a-91ff-fec2af415ebd'
 
   # Web app name
-  webAppName: 'react-web-app'
+  webAppName: 'react-app-automate'
 
   # Environment name
-  environmentName: 'react-web-app'
+  environmentName: 'react-app-automate'
 
   vmImageName: 'ubuntu-latest'
 
