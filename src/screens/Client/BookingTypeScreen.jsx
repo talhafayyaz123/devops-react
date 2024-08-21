@@ -9,6 +9,4 @@ const BookingTypeScreen = () => {
     </>
   )
 }
-
-
 export default BookingTypeScreen
