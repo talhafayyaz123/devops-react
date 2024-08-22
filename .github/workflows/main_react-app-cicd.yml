@@ -19,13 +19,16 @@ jobs:
           node-version: '20'  # Specify your project's Node.js version
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Run tests
         run: npm test
 
       - name: Build project
         run: node --max_old_space_size=4096 node_modules/.bin/npm run build
+
+      - name: Set npm registry to a different mirror
+        run: npm config set registry https://registry.npmjs.org/
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.1
