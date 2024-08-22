@@ -30,18 +30,6 @@ stages:
       vmImage: $(vmImageName)
 
     steps:
-
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '18.x'  # Updated to the latest Node.js version used in your local environment
-      displayName: 'Install Node.js'
-
-    - script: npm ci  # Use npm ci instead of npm install for faster, reliable builds
-      displayName: 'Install dependencies'
-
-    - script: npm run build
-      displayName: 'Build the React app'
-
     - task: ArchiveFiles@2
       displayName: 'Archive files'
       inputs:
