@@ -44,7 +44,7 @@ const BookingType = () => {
 
             {/* FOOTER CONTACT  */}
             <div className='absolute bottom-0 left-0 flex justify-between items-center w-screen bg-white text-black font-cursive p-3 text-sm'>
-                <p>© 2023 JARA BEACH RESORT fir tour </p>
+                <p>© 2023 JARA BEACH RESORT fir tour</p>
                 <p>owned and operated by Little Company Nigeria Limited</p>
             </div>
 
