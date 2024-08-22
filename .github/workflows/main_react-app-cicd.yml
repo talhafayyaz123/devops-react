@@ -30,6 +30,9 @@ jobs:
       - name: Set npm registry to a different mirror
         run: npm config set registry https://registry.npmjs.org/
 
+      - name: Upgrade npm
+        run: npm install -g npm@latest
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.1
         with:
