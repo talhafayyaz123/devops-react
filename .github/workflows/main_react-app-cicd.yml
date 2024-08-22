@@ -22,7 +22,8 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: node --max_old_space_size=4096 node_modules/.bin/npm run build
+        run: node --max_old_space_size=4096 npm run build
+
       
       - name: Deploy to EC2
         uses: appleboy/ssh-action@v0.1.1
