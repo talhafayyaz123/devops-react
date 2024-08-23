@@ -26,21 +26,21 @@ jobs:
         uses: actions/checkout@v3
       
       - name: Save SSH private key
-        run: echo "${{ secrets.EC2_SSH_KEY }}" > ~/Downloads/kafka1.pem
+        run: echo "${{ secrets.EC2_SSH_KEY }}" > $GITHUB_WORKSPACE/kafka1.pem
       
       - name: Set SSH key permissions
-        run: chmod 600 ~/Downloads/kafka1.pem
+        run: chmod 600 $GITHUB_WORKSPACE/kafka1.pem
       
       - name: Zip the dist directory
         run: zip -r dist.zip dist/
       
       - name: Transfer file via SCP
         run: |
-          scp -o StrictHostKeyChecking=no -i ~/Downloads/kafka1.pem dist.zip ec2-user@54.80.226.154:/home/ec2-user
+          scp -o StrictHostKeyChecking=no -i $GITHUB_WORKSPACE/kafka1.pem dist.zip ec2-user@54.80.226.154:/home/ec2-user
       
       - name: Deploy on remote server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/Downloads/kafka1.pem ec2-user@54.80.226.154 "
+          ssh -o StrictHostKeyChecking=no -i $GITHUB_WORKSPACE/kafka1.pem ec2-user@54.80.226.154 "
             rm -vrf /home/ec2-user/* && \
             mv /home/ec2-user/dist.zip /home/ec2-user/ && \
             cd /home/ec2-user && \
