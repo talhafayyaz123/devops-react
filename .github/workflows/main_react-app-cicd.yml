@@ -18,10 +18,12 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: List contents of workspace
+      - name: List contents of workspace after build
         run: |
-          echo "Listing contents of the workspace directory:"
+          echo "Listing contents of the workspace directory after build:"
           ls -la $GITHUB_WORKSPACE
+          echo "Listing contents of the dist directory:"
+          ls -la $GITHUB_WORKSPACE/dist || echo "dist directory not found"
 
       - name: Check for dist directory
         run: |
