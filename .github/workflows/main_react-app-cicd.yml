@@ -37,6 +37,7 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
         shell: bash
 
+        
       - name: Debug - Verify SSH key
         run: ls -la ~/.ssh && cat ~/.ssh/id_rsa
         shell: bash
