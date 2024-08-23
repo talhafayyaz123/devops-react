@@ -18,13 +18,13 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Verify build output
+      - name: Debug build output
         run: |
           echo "Listing contents of the workspace directory:"
           ls -la $GITHUB_WORKSPACE
           echo "Listing contents of potential build output directories:"
-          find $GITHUB_WORKSPACE -type d -exec ls -la {} \; || echo "No directories found"
-
+          find $GITHUB_WORKSPACE -type d -name 'dist' -exec ls -la {} \; || echo "No dist directory found"
+          
   deploy:
     runs-on: ubuntu-latest
     needs: build
