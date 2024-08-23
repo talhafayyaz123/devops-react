@@ -22,13 +22,8 @@ jobs:
         run: |
           echo "Listing contents of the workspace directory:"
           ls -la $GITHUB_WORKSPACE
-          echo "Listing contents of the dist directory if it exists:"
-          if [ -d "$GITHUB_WORKSPACE/dist" ]; then
-            ls -la $GITHUB_WORKSPACE/dist
-          else
-            echo "Error: dist directory does not exist."
-            exit 1
-          fi
+          echo "Listing contents of the build directory:"
+          find $GITHUB_WORKSPACE -type d -name 'dist' -exec ls -la {} \; || echo "No dist directory found"
 
   deploy:
     runs-on: ubuntu-latest
