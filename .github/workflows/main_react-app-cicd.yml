@@ -17,6 +17,18 @@ jobs:
       
       - name: Build project
         run: npm run build
+      
+      - name: Check build output
+        run: |
+          echo "Listing contents of the workspace directory:"
+          ls -la $GITHUB_WORKSPACE
+          echo "Listing contents of the dist directory if it exists:"
+          if [ -d "$GITHUB_WORKSPACE/dist" ]; then
+            ls -la $GITHUB_WORKSPACE/dist
+          else
+            echo "Error: dist directory does not exist."
+            exit 1
+          fi
 
   deploy:
     runs-on: ubuntu-latest
@@ -30,13 +42,6 @@ jobs:
       
       - name: Set SSH key permissions
         run: chmod 600 $GITHUB_WORKSPACE/kafka1.pem
-      
-      - name: Verify dist directory
-        run: |
-          echo "Listing contents of the workspace directory:"
-          ls -la $GITHUB_WORKSPACE
-          echo "Listing contents of the dist directory:"
-          ls -la $GITHUB_WORKSPACE/dist
       
       - name: Zip the dist directory
         run: |
