@@ -31,8 +31,21 @@ jobs:
       - name: Set SSH key permissions
         run: chmod 600 $GITHUB_WORKSPACE/kafka1.pem
       
+      - name: Verify dist directory
+        run: |
+          echo "Listing contents of the workspace directory:"
+          ls -la $GITHUB_WORKSPACE
+          echo "Listing contents of the dist directory:"
+          ls -la $GITHUB_WORKSPACE/dist
+      
       - name: Zip the dist directory
-        run: zip -r dist.zip dist/
+        run: |
+          if [ -d "$GITHUB_WORKSPACE/dist" ]; then
+            zip -r dist.zip dist/
+          else
+            echo "Error: dist directory does not exist."
+            exit 1
+          fi
       
       - name: Transfer file via SCP
         run: |
