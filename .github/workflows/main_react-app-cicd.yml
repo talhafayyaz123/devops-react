@@ -1,70 +1,52 @@
-# CI/CD configuration file
+name: CI/CD Pipeline
 
-# Define stages for the pipeline
-stages:
-  - build
-  - deploy
+on:
+  push:
+    branches:
+      - main
 
-# Cache configuration to speed up the build process
-cache:
-  key: "$CI_COMMIT_REF_SLUG"
-  paths:
-    - dist/  # Cache the 'dist' directory
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Build project
+        run: npm run build
 
-# Build stage
-app_build:
-  stage: build
-  script:
-    - npm install  # Install project dependencies
-    - npm run build  # Build the project
-    - echo "Build Completed!"  # Print a completion message
-  tags: # Tags specify the GitLab runner where this pipeline will be executed
-    - mygitlabrunner
-  only: # Define which branches trigger this pipeline stage
-    - main
-
-# Deploy stage
-app_deploy:
-  stage: deploy
-  script:
-    - |
-      # Save the SSH private key to a file
-      echo "$EC2_SSH_KEY" > ~/Downloads/kafka1.pem
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
       
-      # Change the Key Permissions
-      chmod 600 ~/Downloads/kafka1.pem
+      - name: Save SSH private key
+        run: echo "${{ secrets.EC2_SSH_KEY }}" > ~/Downloads/kafka1.pem
       
-      # Zip the dist directory
-      zip -r dist.zip dist/
+      - name: Set SSH key permissions
+        run: chmod 600 ~/Downloads/kafka1.pem
       
-      # Transfer the zip file via SCP
-      scp -v -o StrictHostKeyChecking=no -i ~/Downloads/kafka1.pem dist.zip ec2-user@54.80.226.154:/home/ec2-user
+      - name: Zip the dist directory
+        run: zip -r dist.zip dist/
       
-      # SSH into the remote server and unzip the file
-      ssh -o StrictHostKeyChecking=no -i ~/Downloads/kafka1.pem ec2-user@54.80.226.154 "
-        # Remove old files from the target directory
-        rm -vrf /home/ec2-user/* && \
-        
-        # Move the zip file to the target directory
-        mv /home/ec2-user/dist.zip /home/ec2-user/ && \
-        
-        # Change to the target directory
-        cd /home/ec2-user && \
-        
-        # Unzip the file
-        unzip -o dist.zip && \
-        
-        # Move extracted files if needed
-        mv dist/* . && \
-        
-        # Clean up
-        rm -rf dist dist.zip"
+      - name: Transfer file via SCP
+        run: |
+          scp -o StrictHostKeyChecking=no -i ~/Downloads/kafka1.pem dist.zip ec2-user@54.80.226.154:/home/ec2-user
       
-      # Remove the zip file after transfer
-      rm dist.zip
-
-      echo "Deployment Completed!"  # Print a completion message
-  tags:  # Tags specify the GitLab runner where this pipeline will be executed
-    - mygitlabrunner
-  only:  # Define which branches trigger this pipeline stage
-    - main
+      - name: Deploy on remote server
+        run: |
+          ssh -o StrictHostKeyChecking=no -i ~/Downloads/kafka1.pem ec2-user@54.80.226.154 "
+            rm -vrf /home/ec2-user/* && \
+            mv /home/ec2-user/dist.zip /home/ec2-user/ && \
+            cd /home/ec2-user && \
+            unzip -o dist.zip && \
+            mv dist/* . && \
+            rm -rf dist dist.zip"
+      
+      - name: Cleanup
+        run: rm dist.zip
