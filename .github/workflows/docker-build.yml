@@ -25,6 +25,6 @@ jobs:
 
       - name: Build, tag, and push image to ECR
         run: |
-          docker build -t my-app .
-          docker tag my-app:latest 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-app:latest
-          docker push 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-app:latest
+          docker build -t react-automate .
+          docker tag react-automate:latest 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
+          docker push 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
