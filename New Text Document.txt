@@ -1,8 +1,0 @@
-https://www.figma.com/design/GkV3915hVcxQVVfpOAapg5/Jollof---Jara---Website-(Copy)?node-id=2343-11256
-http://localhost:5173/overnight/guest
-
-https://github.com/twentyFourDesign/jaraBooking/commit/3a5462d3dff5c148c40ef0f45f75a46bee37f8fc
-
-https://paystack.com/docs/payments/accept-payments/
-
-https://www.figma.com/design/GkV3915hVcxQVVfpOAapg5/Jollof---Jara---Website-(Copy)?node-id=2343-11256
