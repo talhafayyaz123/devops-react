@@ -1,4 +1,4 @@
-name: Build and Push Docker Image to AWS ECR
+name: Build and Push Docker Image to Amazon ECR
 
 on:
   push:
@@ -10,35 +10,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the code
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
-      # Log in to Amazon ECR
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Log in to Amazon ECR
-        id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        with:
-          region: ${{ secrets.AWS_REGION }} 
-
-      # Build and tag the Docker image
-      - name: Build, tag, and push Docker image to ECR
         env:
-          ECR_REPOSITORY: react-automate
-          IMAGE_TAG: latest
-          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
+      - name: Build, tag, and push image to ECR
         run: |
-          # Get the login command from ECR and execute it
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
-
-          # Build the Docker image
-          docker build -t $ECR_REPOSITORY:$IMAGE_TAG .
-
-          # Tag the image
-          docker tag $ECR_REPOSITORY:$IMAGE_TAG ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
-
-          # Push the image to AWS ECR
-          docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/$ECR_REPOSITORY:$IMAGE_TAG
-
-      # (Optional) Deploy the image if needed
-      # You can add deployment steps if you're using ECS or another service for deployment
+          docker build -t my-app .
+          docker tag my-app:latest 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-app:latest
+          docker push 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/my-app:latest
