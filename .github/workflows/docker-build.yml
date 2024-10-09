@@ -24,7 +24,7 @@ jobs:
       # Build and tag the Docker image
       - name: Build, tag, and push Docker image to ECR
         env:
-          ECR_REPOSITORY: your-ecr-repo-name
+          ECR_REPOSITORY: react-automate
           IMAGE_TAG: latest
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
         run: |
