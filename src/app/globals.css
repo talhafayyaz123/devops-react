@@ -1,0 +1,145 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+body {
+  background-color: white;
+  font-family: 'Montserrat';
+}
+
+.ql-container {
+  border: none !important;
+  min-height: 150px;
+  background-color: white !important;
+  max-height: 500px;
+}
+
+.ql-toolbar {
+  border: none !important;
+  border-bottom: 1px solid #dedbdb !important;
+  background-color: white !important;
+  border-radius: 0.75rem;
+}
+
+.ql-editor {
+  padding: 1rem;
+  border: none !important;
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* Define Font Faces for MarkForMC */
+@font-face {
+  font-family: 'MarkForMC';
+  src: url('../assets/fonts/MarkForMC/MarkForMC.ttf') format('truetype');
+  font-weight: 400; /* Regular */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MarkForMC';
+  src: url('../assets/fonts/MarkForMC/MarkForMC-ExtraLt.ttf') format('truetype');
+  font-weight: 200; /* Extra Light */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MarkForMC';
+  src: url('../assets/fonts/MarkForMC/MarkForMC-Med.ttf') format('truetype');
+  font-weight: 500; /* Medium */
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MarkForMC';
+  src: url('../assets/fonts/MarkForMC/MarkForMC-Lt.ttf') format('truetype');
+  font-weight: 300; /* Light */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* @font-face {
+  font-family: 'MarkForMC';
+  src: url('../assets/fonts/MarkForMC/MarkForMC-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MarkForMC';
+  src: url('../assets/fonts/MarkForMC/MarkForMC-ExtraBold.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+} */
+
+/* Font Classes for MarkForMC */
+.font-markForMC {
+  font-family: 'MarkForMC', sans-serif;
+}
+
+.font-markForMC-regular {
+  font-family: 'MarkForMC', sans-serif;
+  font-weight: 400;
+}
+
+.font-markForMC-light {
+  font-family: 'MarkForMC', sans-serif;
+  font-weight: 300;
+}
+
+.font-markForMC-medium {
+  font-family: 'MarkForMC', sans-serif;
+  font-weight: 500;
+}
+
+.font-markForMC-bold {
+  font-family: 'MarkForMC', sans-serif;
+  font-weight: 700;
+}
+
+.font-markForMC-extra-bold {
+  font-family: 'MarkForMC', sans-serif;
+  font-weight: 800;
+}
+
+/* Custom Scrollbar Styling */
+.sidebar-scroll-bar::-webkit-scrollbar {
+  height: 4px;
+  width: 2px;
+}
+
+.sidebar-scroll-bar::-webkit-scrollbar-thumb {
+  background-color: #364ea2;
+}
+
+.sidebar-scroll-bar::-webkit-scrollbar-track {
+  background-color: #f5f5f5;
+}
+
+.custom-scroll {
+  overflow-y: auto;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
+.custom-scroll {
+  -ms-overflow-style: none; /* For Internet Explorer and Edge */
+  scrollbar-width: none; /* For Firefox */
+}
