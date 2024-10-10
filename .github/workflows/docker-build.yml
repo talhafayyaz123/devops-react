@@ -38,14 +38,14 @@ jobs:
         uses: appleboy/ssh-action@v0.1.1
         with:
           host: ${{ secrets.EC2_HOST }}
-          username: ubuntu # Usually `ubuntu` for Ubuntu instances; change if necessary
-          key: ${{ secrets.EC2_SSH_KEY }}
+          username: ubuntu
           port: 22
           script: |
+            eval $(ssh-agent -s)
+            ssh-add <(echo "$EC2_SSH_KEY")
             sudo systemctl stop nginx
             docker stop react-automate || true
             docker rm react-automate || true
             aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com
             docker pull 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
             docker run -d -p 80:3000 --name react-automate 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
-            sudo systemctl start nginx
