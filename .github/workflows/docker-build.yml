@@ -41,8 +41,7 @@ jobs:
           username: ubuntu
           port: 22
           script: |
-            eval $(ssh-agent -s)
-            ssh-add <<< "$EC2_SSH_KEY"
+            ssh-keyscan -t rsa ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
             sudo systemctl stop nginx
             docker stop react-automate || true
             docker rm react-automate || true
