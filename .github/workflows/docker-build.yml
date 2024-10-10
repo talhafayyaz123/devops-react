@@ -28,3 +28,19 @@ jobs:
           docker build -t react-automate .
           docker tag react-automate:latest 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
           docker push 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
+
+
+      - name: Deploy to EC2 via SSH
+        uses: appleboy/ssh-action@v0.1.1
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
+            sudo systemctl stop nginx
+            docker stop react-automate || true
+            docker rm react-automate || true
+            aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 299030377158.dkr.ecr.us-east-1.amazonaws.com
+            docker pull 299030377158.dkr.ecr.us-east-1.amazonaws.com/react-automate:latest
+            docker run -d -p 80:3000 --name react-automate 299030377158.dkr.ecr.us-east-1.amazonaws.com/react-automate:latest
