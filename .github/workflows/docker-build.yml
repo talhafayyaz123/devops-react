@@ -29,14 +29,18 @@ jobs:
           docker tag react-automate:latest 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
           docker push 299030377158.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/react-automate:latest
 
+      - name: Decode SSH key
+        run: echo "${{ secrets.EC2_SSH_KEY_BASE64 }}" | base64 --decode > kafka1.pem
+
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.1
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ubuntu
-          key: ${{ secrets.EC2_SSH_KEY }}
+          //key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
-          key_type: "pem"
+          key: kafka1.pem
+          key_type: pem
           script: |
             sudo systemctl stop nginx
             docker stop react-automate || true
