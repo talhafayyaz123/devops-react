@@ -32,6 +32,10 @@ jobs:
       - name: Decode SSH key
         run: echo "${{ secrets.EC2_SSH_KEY_BASE64 }}" | base64 --decode > kafka1.pem
 
+      - name: Check if SSH key exists
+        run: ls -l kafka1.pem
+
+
       - name: Deploy to EC2 via SSH
         uses: appleboy/ssh-action@v0.1.1
         with:
